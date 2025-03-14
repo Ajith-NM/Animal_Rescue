@@ -95,7 +95,7 @@ export class AuthService {
         body.email,
         hashPassword,
         uid,
-        'image',
+        process.env.DEFAULT_IMAGE_URL,
         'internal',
         false,
       );
@@ -217,6 +217,7 @@ export class AuthService {
       message: 'specified user was not found',
     };
   }
+
   async resetPassword(password: string, token: string) {
     const saltOrRounds = 10;
     function newError(message: string) {
