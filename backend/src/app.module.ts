@@ -6,12 +6,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from './mailer/mailer.module';
+import { PetsModule } from './pets/pets.module';
+import { UploadModule } from './upload/upload.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    MulterModule.register({ dest: './uploads' }),
     MongooseModule.forRoot(process.env.MONGO_DB_CONNECTION_URL, {
       dbName: 'nest_backend',
     }),
@@ -22,6 +26,8 @@ import { MailerModule } from './mailer/mailer.module';
     }),
     AuthModule,
     MailerModule,
+    PetsModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
