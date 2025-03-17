@@ -20,7 +20,7 @@ export class NewPetsDto {
 
   @ApiProperty()
   @IsString()
-  pet_vaccinated: string; //change need
+  pet_vaccinated: string;
 
   @ApiProperty()
   @IsString()

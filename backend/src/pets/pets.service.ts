@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Pets } from 'src/schemas/pets/pets.schema';
 import { NewPetsDto } from './dtos/request/addPetsRequest.dto';
 import { UploadService } from 'src/upload/upload.service';
+import { PetsStatusDto } from './dtos/request/updatePetRequest';
 
 @Injectable()
 export class PetsService {
@@ -40,5 +41,44 @@ export class PetsService {
       message: 'file Upload failed',
       data: uploadResponse.data,
     };
+  }
+  async putUpdatePetsStatus(body: PetsStatusDto) {
+    try {
+      const pet = await this.petsModel.findByIdAndUpdate(
+        body.pet_id,
+        {
+          pet_adoption_status: body.pet_status,
+        },
+        { new: true },
+      );
+      return {
+        status: true,
+        message: 'pet updation completed',
+        data: pet,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        data: error,
+        message: 'pets update status failed',
+      };
+    }
+  }
+
+  async deletePet(id: string) {
+    try {
+      const pet = await this.petsModel.findByIdAndDelete(id);
+      return {
+        status: true,
+        message: 'deletion completed',
+        data: pet,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        data: error,
+        message: 'pets update status failed',
+      };
+    }
   }
 }
