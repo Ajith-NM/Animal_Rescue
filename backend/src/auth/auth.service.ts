@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from 'src/schemas/users/users.schema';
+import { Users, UsersDocument } from 'src/schemas/users/users.schema';
 import { SignupDto } from './dtos/request/signupRequest.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -13,7 +13,7 @@ import { OAuth2Client, TokenPayload } from 'google-auth-library';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Users.name) private userModel: Model<Users>,
     private jwtService: JwtService,
     private configService: ConfigService,
     private readonly mailerService: MailerService,
@@ -67,7 +67,7 @@ export class AuthService {
       .findOne({
         $or: [{ username: body.userName }, { email: body.email }],
       })
-      .lean<UserDocument>();
+      .lean<UsersDocument>({});
     const uid = Date.now().toString();
     const sendVerificationMail = async () => {
       const token = await this.generateToken(

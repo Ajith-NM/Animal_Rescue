@@ -9,6 +9,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { PetsModule } from './pets/pets.module';
 import { UploadModule } from './upload/upload.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { BlogsModule } from './blogs/blogs.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MulterModule } from '@nestjs/platform-express';
     MailerModule,
     PetsModule,
     UploadModule,
+    BlogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
