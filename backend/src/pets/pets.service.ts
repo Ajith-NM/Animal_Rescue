@@ -81,4 +81,27 @@ export class PetsService {
       };
     }
   }
+
+  async getAllPets() {
+    try {
+      const pets = await this.petsModel.find();
+      if (pets) {
+        return {
+          status: true,
+          message: 'fetch all pets',
+          data: pets,
+        };
+      }
+      return {
+        status: true,
+        message: 'no pets ',
+      };
+    } catch (error) {
+      return {
+        status: false,
+        data: error,
+        message: 'fetch all pets failed',
+      };
+    }
+  }
 }
