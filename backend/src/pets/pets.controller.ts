@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpException,
   HttpStatus,
   Param,
@@ -65,6 +66,27 @@ export class PetsController {
       );
     }
   }
+
+  @Get('get-pets')
+  async getAllPets(@Res() res: Response) {
+    try {
+      const result = await this.petService.getAllPets();
+      if (result.status) {
+        res.status(200).json(result);
+      }
+      res.status(400).json(result);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: false,
+          message: ' failed',
+          data: error,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Delete('delete-pet')
   async deletePet(@Param() param: PetDeleteDto, @Res() res: Response) {
     try {
